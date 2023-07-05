@@ -1,0 +1,782 @@
+/** General */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+:root {
+    --primary-color: #ef7e1c;
+    --primary-color-dark: #ef461c;
+    --secondary-color: #c0d5ff;
+    --secondary-color-dark: #011743;
+    --sinStock-color: #9c0909;
+    --bg-color-dark: #14171d;
+    --bg-color-light: #353639;
+    --bg-color-light-light: #777980;
+    --color-b: #fff;
+}
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    line-height: 1;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+/** Body */
+body {
+    background-color: var(--bg-color-dark);
+    color: #D0E0E3;
+    font-family: 'Roboto', sans-serif;
+}
+
+/** Header */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+header h1 {
+    font-size: 3.6em;
+    line-height: 1.5;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-b);
+}
+header p {
+    font-size: 1.5em;
+    line-height: 1;
+    font-weight: 500;
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+}
+header p em{
+    font-size: 0.8em;
+}
+/** Main */
+/**/
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 4em 2em;
+    background-color: #FFF;
+}
+
+main h2 {
+    font-size: 2.5em;
+    width: 75%;
+    margin: 1em 12.5% 0;
+    line-height: 1.5;
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary-color-dark);
+    text-decoration: underline;
+}
+main h3 {
+    font-size: 2em;
+    width: 75%;
+    margin: 1em 12.5% 0;
+    line-height: 1.5;
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary-color-dark);
+    text-decoration: underline;
+}
+
+/* Minicarrito */
+header #minicarrito {
+    display: flex;
+    direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: var(--bg-color-dark);
+    width: 50%;
+    margin: 3em 25% 2em;
+    z-index: 1;
+}
+header #minicarrito .detalleCarrito {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--color-b);
+}
+header #minicarrito .detalleCarrito p {
+    color: var(--color-b);
+}
+header #minicarrito .detalleCarrito p span {
+    color: var(--primary-color);
+}
+header #minicarrito .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+header #minicarrito .filtros p {
+    color: var(--color-b);
+}
+header #minicarrito .filtros button:hover{
+    border: 1px solid var(--color-b);
+}
+header #minicarrito p span {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+@media screen and (max-width: 1000px) {
+    header #minicarrito {
+        width: 90%;
+        margin: 2em 5% 1em;
+    }
+}
+@media screen and (max-width: 450px) {
+    header #minicarrito {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Botones */
+header button, #contenedorProductos .card .btn-verDetalle, #contenedorProductos .card .btn-agregarCarrito, .modalDetalle .datosProducto .detalleProducto .btn-agregarCarrito, header #minicarrito .filtros button, .modalCarrito .btn-vaciarCarrito, .modalCarrito .btn-compra, .btn-finCompra, .btnVolver {
+    margin: .5em 0;
+    border: 1px solid var(--bg-color-light);
+    border-radius: .5em;
+    padding: .25em .5em;
+    background: var(--primary-color);
+    cursor: pointer;
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--bg-color-dark);
+}
+.btn-finCompra {
+    width: 30%;
+    margin: auto 35%;
+}
+@media screen and (max-width: 568px) {
+    header button {
+        width: 70%;
+        margin: 4% 15%;
+    }
+    header #minicarrito .filtros button {
+        width: 40%;
+        margin: 4% 5%;
+    }
+    .btn-finCompra {
+        width: 70%;
+        margin: auto 15%;
+    }
+}
+@media screen and (max-width: 450px) {
+    .detalleCarrito {
+        margin-top: 5%;
+        margin-bottom: 10%;
+    }
+    header button, header #minicarrito .filtros button {
+        width: 90%;
+        margin: 4% 5%;
+    }
+    .btn-finCompra {
+        width: 90%;
+        margin: auto 5%;
+    }
+}
+header button:hover, #contenedorProductos .card .btn-verDetalle:hover, #contenedorProductos .card .btn-agregarCarrito:hover, .modalDetalle .datosProducto .detalleProducto .btn-agregarCarrito:hover, .modalCarrito .btn-vaciarCarrito:hover, .modalCarrito .btn-compra:hover, .btn-finCompra:hover, .btnVolver:hover {
+    background: var(--primary-color-dark);
+    color: var(--color-b);
+    border: 1px solid var(--color-b);
+}
+header #minicarrito .filtros .btn-eliminar {
+    color: var(--color-b);
+    background-color: var(--primary-color-dark);
+}
+header #minicarrito .filtros .btn-eliminar:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+    transition: 1s;
+}
+/* Bo
+/* Botones */
+
+/* Seccion Producto */
+#contenedorProductos {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Card Producto */
+#contenedorProductos p {
+    font-size: 1.5em;
+    width: 75%;
+    margin: .5em 12.5%;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    color: var(--bg-color-light);
+}
+#contenedorProductos .card {
+    position: relative;
+    background-color: var(--bg-color-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1em;
+    width: 29%;
+    height: 100% !important;
+    padding: 2em;
+    border: 2px solid var(--primary-color-dark);
+    border-radius: 2%;
+    box-shadow: 0px 3px 5px -3px #000;
+}
+#contenedorProductos .card h3, .modalDetalle h3 {
+    font-size: 2em;
+    width: 75%;
+    margin: 1em 12.5%;
+    line-height: 1.5;
+    font-weight: 500;
+    text-align: center;
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+#contenedorProductos .card h4 {
+    font-size: 1.5em;
+    width: 75%;
+    margin: 1em 12.5% 0;
+    line-height: 1.5;
+    font-weight: 500;
+    text-align: left;
+    color: var(--primary-color);
+}
+#contenedorProductos .card p {
+    font-size: 1.5em;
+    width: 75%;
+    margin: .5em 12.5%;
+    font-weight: 500;
+    line-height: 1;
+    text-align: left;
+    color: var(--color-b);
+}
+#contenedorProductos .card img {
+    width: 75%;
+    margin: .5em 12.5% 1.5em;
+    border: solid 1px var(--primary-color);
+    border-radius: 3%;
+}
+
+@media screen and (max-width: 768px) {
+    #contenedorProductos > .card {
+        margin: 1em 2.5%;
+        width: 45%;
+        min-width: 250px;
+        height: 100% !important;
+        padding: 1em;
+    }
+}
+@media screen and (max-width: 568px) {
+    #contenedorProductos > .card {
+        margin: 1em 2.5%;
+        width: 95%;
+        min-width: 300px;
+        height: 100% !important;
+        padding: 1em;
+    }
+}
+@media screen and (max-width: 350px) {
+    #contenedorProductos > .card {
+        margin: 1em 10%;
+        width: 80%;
+        min-width: 300px;
+        height: 100% !important;
+        padding: 1em;
+    }
+}
+
+/* destacar el disco*/
+.sinStock{
+    background-color: var(--bg-color-light-light) !important;
+}
+.sinStock::before {
+    position: absolute;
+    top: -13px;
+    left: -50px;
+    display: block;
+    box-sizing: border-box;
+    content: "Sin Stock";
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    font-weight: 700;
+    color: #ffffff;
+    background: transparent;
+    height: 0;
+    width: 150px;
+    border: 38px solid transparent;
+    border-bottom: 38px solid var(--sinStock-color);
+    line-height: 18px;
+    transform: rotate(-45deg);
+}
+.ultimaUnidad{
+    background-color: var(--bg-color-dark) !important;
+}
+.ultimaUnidad::before {
+    position: absolute;
+    top: -13px;
+    left: -50px;
+    display: block;
+    box-sizing: border-box;
+    content: "Última unidad";
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    font-weight: 700;
+    color: #ffffff;
+    background: transparent;
+    height: 0;
+    width: 150px;
+    border: 38px solid transparent;
+    border-bottom: 38px solid var(--primary-color-dark);
+    line-height: 18px;
+    transform: rotate(-45deg);
+}
+
+/** Modales */
+.modalDetalle, .modalCarrito, .modalCompra, .modalCompraRealizada {
+	position: fixed;
+	z-index: 2;
+    width: 95%;
+    margin: 2% 2.5%;
+    height: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(0,0,0,.9);
+    border: 1px solid var(--color-b);
+    overflow-y: auto; 
+    overflow-x: hidden;
+    padding: 5% 0%;
+}
+/* Estilos para navegadores webkit (Google Chrome, Safari) */
+.modalDetalle::-webkit-scrollbar, .modalCarrito::-webkit-scrollbar, .modalCompra::-webkit-scrollbar, .modalCompraRealizada::-webkit-scrollbar {
+    width: 10px; /* Ancho de la barra de desplazamiento */
+}
+.modalDetalle::-webkit-scrollbar-track, .modalCarrito::-webkit-scrollbar-track, .modalCompra::-webkit-scrollbar-track, .modalCompraRealizada::-webkit-scrollbar-track {
+    background-color: var(--bg-color-dark); /* Color de fondo de la barra de desplazamiento */
+}
+.modalDetalle::-webkit-scrollbar-thumb, .modalCarrito::-webkit-scrollbar-thumb, .modalCompra::-webkit-scrollbar-thumb, .modalCompraRealizada::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color); /* Color del mango de la barra de desplazamiento */
+}
+.modalDetalle::-webkit-scrollbar-thumb:hover, .modalCarrito::-webkit-scrollbar-thumb:hover, .modalCompra::-webkit-scrollbar-thumb:hover, .modalCompraRealizada::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-color-dark); /* Color del mango de la barra de desplazamiento al pasar el cursor */
+}
+@media screen and (max-width: 568px) {
+    .modalCarrito {
+        width: 95%;
+        margin: 5% 2.5%;
+        height: auto;
+    }
+}
+@media screen and (max-width: 450px) {
+    .detalleCarrito {
+        margin-top: 5%;
+        margin-bottom: 10%;
+    }
+    header button, header #minicarrito .filtros button {
+        width: 90%;
+        margin: 4% 5%;
+    }
+}
+.datosProducto {
+    width: 80%;
+    margin: 5% 10%;
+    height: 75%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+    border-radius: 2%;
+}
+@media screen and (max-width: 750px) {
+    .datosProducto {
+        flex-direction: column;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        border-radius: 2%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .datosProducto {
+        width: 90%;
+        margin: 2% 5%;
+    }
+}
+.modalDetalle a, .modalCarrito a, .modalCompra a, .modalCompraRealizada a {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 1.5em;
+    right: 1.5em;
+    border-radius: 2.5em;
+    width: 3em;
+    height: 3em;
+    background-color: var(--primary-color-dark);
+    font-size: 1em;
+    text-align: center;
+    color: var(--color-b);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid var(--color-b);
+}
+.modalDetalle a:hover, .modalCarrito a:hover, .modalCompra a:hover, .modalCompraRealizada a:hover {
+	background-color: var(--primary-color);
+	color: var(--bg-color-dark);
+}
+.modalDetalle img {
+	width: 30%;
+    border: solid 1px var(--primary-color);
+    border-radius: 3%;
+}
+@media screen and (max-width: 1100px) {
+    .modalDetalle img {
+        width: 45%;
+    }
+}
+@media screen and (max-width: 450px) {
+    .modalDetalle img {
+        width: 60%;
+        margin-top: 2em;
+        margin-bottom: .5em;
+    }
+}
+.detalleProducto {
+    width: 40%;
+    margin: 1% 10%;
+    height: 75%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: left;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.productosCarrito {
+    width: 80%;
+    margin: 1% 10%;
+    height: auto;
+	text-align: center;
+}
+.productosCarrito div {
+    margin: 1% 1%;
+    height: auto;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+	text-align: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.totalesCarrito, .botonesCarrito {
+    width: 80%;
+    margin: 1% 1%;
+    height: auto;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+	text-align: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.productosCarrito div p {
+    width: 35%;
+    margin: 0 0 0 0;
+	text-align: center;
+}
+.totalesCarrito p {
+    width: 50%;
+    text-align: center !important;
+    color: var(--primary-color) !important;
+    font-size: 2em !important;
+    font-weight: bolder;
+}
+.botonesCarrito button {
+    width: 40%;
+    margin: 0 5% 0 5% !important;
+    text-align: center !important;
+}
+.productosCarrito div .masMenosProductos {
+    width: 30%;
+}
+
+.productosCarrito div .masMenosProductos button{
+    position: relative;
+    background-color: var(--primary-color);
+    color: var(--bg-color-dark);
+    padding: 1.3%;
+    width: 10%;
+    font-weight: bold;
+    font-size: 1.5em;
+    border: 1px solid var(--bg-color-light);
+    cursor: pointer;
+}
+.productosCarrito div .masMenosProductos :first-child{
+    border-radius: 20% 0 0 20%;
+}
+.productosCarrito div .masMenosProductos :last-child{
+    border-radius: 0 20% 20% 0;
+}
+.productosCarrito div .masMenosProductos button:hover{
+    background-color: var(--primary-color-dark);
+    color: var(--color-b);
+    padding: 1.3%;
+}
+.productosCarrito div .masMenosProductos p {
+    background-color: var(--color-b);
+    color: var(--bg-color-dark);
+    padding: 1%;
+    text-align: center;
+    border: 1px solid var(--bg-color-dark);
+    width: 30%;
+}
+@media screen and (max-width: 750px) {
+    .detalleProducto {
+        width: 90%;
+        height: auto;
+        margin-top: 1em;
+    }
+}
+.modalDetalle h3, .modalCarrito h3, .modalCompra h3, .modalCompraRealizada h3 {
+    width: 100%;
+    font-size: 3em;
+    margin: 5em 0 1em;
+}
+@media screen and (max-width: 750px) {
+    .modalDetalle h3, .modalCarrito h3, .modalCompra h3, .modalCompraRealizada h3{
+        margin: .8em 0 0;
+        font-size: 2em;
+    }
+}
+.modalDetalle p, .modalCarrito p, .modalCompraRealizada p {
+	margin: 0 0 1em 0;
+	text-align: left;
+	color: var(--color-b);
+    font-size: 1.5em;
+}
+.modalCompra p {
+    width: 90%;
+	margin: 0 5% 1% 0;
+	text-align: center;
+	color: var(--color-b);
+    font-size: 1.5em;
+}
+@media screen and (max-width: 750px) {
+    .modalDetalle p, .modalCarrito p, .modalCompra p, .modalCompraRealizada p  {
+        font-size: 1.2em;
+    }
+}
+@media screen and (max-width: 568px) {
+    .productosCarrito div {
+        flex-direction: row;
+        flex-wrap: wrap;
+        line-height: 1.5em;
+        margin-top: 5%;
+    }
+    .productosCarrito div p {
+        width: 90%;
+        margin: 0% 5% 3% 5%;
+    }
+    .productosCarrito div .masMenosProductos p {
+        margin: 0% 0% 0% 0% !important;
+    }
+    .productosCarrito div .masMenosProductos {
+        width: 90%;
+        margin: 0;
+    }
+    .totalesCarrito, .botonesCarrito {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        line-height: 1.5em;
+        margin-top: 5%;
+    }
+    .totalesCarrito p {
+        width: 90%;
+        margin: 3% 5%;
+    }
+    .botonesCarrito button {
+        width: 80%;
+        margin: 3% 10% !important;
+    }
+}
+
+/* Modal Detalle Producto */
+/** Footer */
+footer {
+    width: 70%;
+    margin: 3em 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    color: var(--color-b);
+}
+footer div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+footer div ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    list-style: none;
+}
+
+footer div ul li {
+    font-family: 'Montserrat';
+    font-size: 1.4em;
+    line-height: 1.5;
+    text-align: center;
+}
+
+footer div ul li a {
+    font-family: 'Montserrat';
+    font-size: 1em;
+    text-decoration: none;
+    color: var(--primary-color)
+}
+
+footer ul li a:hover {
+    color: var(--primary-color-dark)
+}
+
+/*
+    Web
+*/
+@media screen and (min-width: 960px) {
+    /** Footer */
+    footer ul {
+        flex-direction: row;
+    }
+
+}
+
+/* form */
+form {
+    width: 90%;
+    margin: 0% 5%;
+}
+fieldset {
+    width: 90%;
+    margin: 2% 5%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+fieldset legend {
+    font-size: 1.5em;
+    color: var(--primary-color);
+    padding: 0 3%;
+    font-weight: bold;
+    text-decoration: underline;
+}
+fieldset span {
+    width: 90%;
+    margin: 1% 5% 0%;
+    font-size: 1.5em;
+}
+fieldset label {
+    width: 40%;
+    margin: 0% 0%;
+    font-size: 1.5em;
+    text-align: left;
+}
+fieldset input {
+    font-size: 1.5em;
+    width: 90%;
+    margin: 0% 5% 1%;
+}
+fieldset .radioInput {
+    font-size: 1.5em;
+    width: 5% !important;
+    margin: 0% 0%;
+    margin-right: 1%;
+}
+.divTipoTarjetas {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin: 1% 0%;
+}
+.divInfoTarjetas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+/* form */
+
+.pDescripcionCard {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}

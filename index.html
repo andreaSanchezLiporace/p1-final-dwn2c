@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Programación I | Parcial 2 | ARCHILLI | SANCHEZ LIPORACE</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
+        <link rel="shortcut icon" href="img/favicon.ico" />
+        <link rel="stylesheet" href="css/estilos.css" />
+    </head>
+    <body>
+        <header>
+            <h1>LibrarT</h1>
+            <p>Una librería para artistas</p>
+
+            <div id="minicarrito">
+                <div class="detalleCarrito">
+                    <p><span id="itemsCarrito">0</span> ítems agregados</p>
+                    <p>$<span id="totalPagar">0</span> es el total</p>
+                    <button onclick="verCarrito()">Ver carrito</button>
+                </div>
+                <div class="filtros">
+                    <p>Filtrar por</p>
+                    <button onclick="filtrarPorCategoria('Lápices')">Lápices</button>
+                    <button onclick="filtrarPorCategoria('Óleos')">Óleos</button>
+                    <button onclick="filtrarPorCategoria('Pasteles')">Pasteles</button>
+                </div>
+            </div>
+        </header>
+        <main>
+            <h2>Productos</h2>
+            <section id="contenedorProductos"></section>
+        </main>
+        <footer>
+            <div>
+                <ul>
+                    <li>Profesor Fabrizio Carlassara</li>
+                    <li><a href="mailto:fabrizio.carlassara@davinci.edu.ar?subject=P1%20-%20Consulta%20-%20DW2[M|T|N][A|B]%20-%20Apellido,%20Nombre" target="_blank">fabrizio.carlassara@davinci.edu.ar</a></li>
+                    <li>Programación 1</li>
+                </ul>
+                <ul>
+                    <li>Segundo Parcial - Junio 2023</li>
+                    <li><a href="https://github.com/andreaSanchezLiporace/p1-parcial-2-dwn2c">Andrea Sanchez Liporace</a></li>
+                    <li><a href="https://github.com/marchilli/p1-parcial-2-dwn2c/">Matías Archilli</a></li>
+                </ul>
+            </div>
+        </footer>
+        <script src="js/productos.json"></script>
+        <script src="js/producto.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>
