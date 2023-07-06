@@ -7,6 +7,7 @@
 
 let aCatalogo = [];
 let aCarrito = [];
+let aCategorias = [];
 let precioTotal = 0;
 let contadorProductos = 0;
 
@@ -14,8 +15,6 @@ let contadorProductos = 0;
  * Mostramos el catalogo en l aprimer vista del sitio
  * Buscamos la etiqueta section del HTML con el ID "contenedorProductos", section donde mostraremos la estructura creada con DOM para cada articulo de aCatalogo.
 */
-let sectionPrincipal = document.getElementById("contenedorProductos");
-
 fetch("js/productos.json").then(response => response.json()).then(jsonCatalogo => {
 
     jsonCatalogo.forEach(productoJson => {
@@ -43,6 +42,83 @@ fetch("js/productos.json").then(response => response.json()).then(jsonCatalogo =
     } 
 
 });
+
+
+
+let sectionPrincipal = document.getElementById("contenedorProductos");
+
+let divMiniCarrito = document.getElementById("minicarrito");
+
+let divDetalleCarrito = document.createElement("div");
+divDetalleCarrito.classList.add("detalleCarrito");
+
+let localStorageItems;
+
+let pItemsAgregados = document.createElement("p");
+pItemsAgregados.innerText = "ítems agregados";
+let spanItemsAgregados = document.createElement("span");
+spanItemsAgregados.setAttribute("id","itemsCarrito");
+
+if(localStorage.getItem("itemsCarrito")){
+    localStorageItems =  localStorage.getItem("itemsCarrito");
+    spanItemsAgregados.innerText = localStorageItems;
+}else{
+    spanItemsAgregados.innerText = " 0";
+}
+pItemsAgregados.append(spanItemsAgregados);
+
+let localStorageTotalPagar;
+
+let pTotalPagar = document.createElement("p");
+pTotalPagar.innerText = "es el total";
+let spanTotalPagar = document.createElement("span");
+spanTotalPagar.setAttribute("id","totalPagar");
+
+if(localStorage.getItem("totalPagar")){
+    localStorageTotalPagar =  localStorage.getItem("totalPagar");
+    spanTotalPagar.innerText = mostrarPrecioEnPesos(parseFloat(localStorageTotalPagar));
+}else{
+    spanTotalPagar.innerText = " 0";
+}
+
+pTotalPagar.append(spanTotalPagar);
+
+let btnVerCarrito = document.createElement("button");
+btnVerCarrito.setAttribute("id","btnVerCarrito");
+btnVerCarrito.innerText = "Ver carrito";
+btnVerCarrito.addEventListener("click", () => {
+    verCarrito();
+})
+
+divDetalleCarrito.append(pItemsAgregados,pTotalPagar,btnVerCarrito);
+
+let divFiltros = document.createElement("div");
+divFiltros.classList.add("filtros");
+
+let pFiltro = document.createElement("p");
+pFiltro.innerText = "Filtrar por";
+
+let btnFiltroLapices = document.createElement("button");
+btnFiltroLapices.innerText = "Lápices";
+btnFiltroLapices.addEventListener("click", () => {
+    filtrarPorCategoria('Lápices');
+})
+
+let btnFiltroOleos = document.createElement("button");
+btnFiltroOleos.innerText = "Óleos";
+btnFiltroOleos.addEventListener("click", () => {
+    filtrarPorCategoria('Óleos');
+})
+
+let btnFiltroPasteles = document.createElement("button");
+btnFiltroPasteles.innerText = "Pasteles";
+btnFiltroPasteles.addEventListener("click", () => {
+    filtrarPorCategoria('Pasteles');
+})
+
+divFiltros.append(pFiltro,btnFiltroLapices,btnFiltroOleos,btnFiltroPasteles);
+
+divMiniCarrito.append(divDetalleCarrito, divFiltros);
 
 
 /**
@@ -127,10 +203,14 @@ function agregarAlCarrito(producto){
     contadorProductos++;
     if(itemCarritoModal || precioFinalModal != null){
         itemCarritoModal.innerText = "Cantidad de productos: " + contadorProductos;
-        precioFinalModal.innerText = "Total a pagar: $" + precioTotal.toLocaleString();
+        precioFinalModal.innerText = "Total a pagar: $" + mostrarPrecioEnPesos(precioTotal);
     }
     itemCarrito.innerText = contadorProductos;
-    precioFinal.innerText = precioTotal.toLocaleString();
+    precioFinal.innerText = mostrarPrecioEnPesos(precioTotal);
+
+    localStorage.setItem("itemsCarrito", contadorProductos);
+    localStorage.setItem("totalPagar", precioTotal);
+    localStorage.setItem("aCarrito", JSON.stringify(aCarrito));
 }
 
 /**
@@ -161,10 +241,14 @@ function eliminarDelCarrito(producto, contenedorProducto, indice){
     contadorProductos--;
         if(itemCarritoModal || precioFinalModal != null){
             itemCarritoModal.innerText = "Cantidad de productos: " + contadorProductos;
-            precioFinalModal.innerText = "Total a pagar: $" + precioTotal.toLocaleString();
+            precioFinalModal.innerText = "Total a pagar: $" + mostrarPrecioEnPesos(precioTotal);
         }
         itemCarrito.innerText = contadorProductos;
-        precioFinal.innerText = precioTotal.toLocaleString();
+        precioFinal.innerText = mostrarPrecioEnPesos(precioTotal);
+
+        localStorage.setItem("itemsCarrito", contadorProductos);
+        localStorage.setItem("totalPagar", precioTotal);
+        localStorage.setItem("aCarrito", JSON.stringify(aCarrito));
 }
 
 /**
@@ -212,7 +296,7 @@ function verCarrito () {
             totalesCarrito.classList.add("totalesCarrito");
             let pPrecioTotal = document.createElement("p");
                 pPrecioTotal.setAttribute('id','pPrecioTotalModal');
-                pPrecioTotal.innerText = "Total a pagar: $" + precioTotal.toLocaleString();
+                pPrecioTotal.innerText = "Total a pagar: " + mostrarPrecioEnPesos(precioTotal);
             let pCantProductos = document.createElement("p");
                 pCantProductos.setAttribute('id','pCantProductosModal');
                 pCantProductos.innerText = "Cantidad de productos: " + contadorProductos;
@@ -233,7 +317,7 @@ function verCarrito () {
                     precioTotal = 0;
                     contadorProductos = 0;
                     divProductosCarrito.innerHTML = "";
-                    pPrecioTotal.innerText = "Total a pagar: $" + precioTotal;
+                    pPrecioTotal.innerText = "Total a pagar: " + precioTotal;
                     pCantProductos.innerText = "Cantidad de productos: " + contadorProductos;
 
                     let itemCarrito = document.querySelector("#itemsCarrito");
