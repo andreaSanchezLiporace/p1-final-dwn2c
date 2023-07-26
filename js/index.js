@@ -658,7 +658,7 @@ function verPublicidades() {
         });
 
     let h3Publicidades = document.createElement("h3");
-    h3Publicidades.innerText = "Todas las publicidades";
+    h3Publicidades.innerText = "Todas nuestras promociones vigentes";
 
     modalPublicidades.append(aCerrar, h3Publicidades);
 
