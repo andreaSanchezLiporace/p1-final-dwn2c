@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "nombre": "Primera compra",
+        "imagenMobile": "img/compra1.png",
+        "imagenTablet": "img/compra1_768.png",
+        "imagenPC": "img/compra1_992.png",
+        "altImagen": "20% de descuento en tu primera compra"
+    },
+    {
+        "id": 2,
+        "nombre": "Banco Galicia",
+        "imagenMobile": "img/galicia.png",
+        "imagenTablet": "img/galicia_768.png",
+        "imagenPC": "img/galicia_992.png",
+        "altImagen": "50% de descuento con tus tarjetas de Banco Galicia"
+    },
+    {
+        "id": 3,
+        "nombre": "Banco Santander",
+        "imagenMobile": "img/santander.png",
+        "imagenTablet": "img/santander_768.png",
+        "imagenPC": "img/santander_992.png",
+        "altImagen": "30% de descuento con tus tarjetas de Banco Santander"
+    },
+    {
+        "id": 4,
+        "nombre": "Banco Frances",
+        "imagenMobile": "img/bbva.png",
+        "imagenTablet": "img/bbva_768.png",
+        "imagenPC": "img/bbva_992.png",
+        "altImagen": "50% de descuento con tus tarjetas de Banco Frances"
+    }
+]

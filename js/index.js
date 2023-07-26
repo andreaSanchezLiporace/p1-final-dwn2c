@@ -8,6 +8,7 @@
 let aCatalogo = [];
 let aCarrito = [];
 let aCategorias = [];
+let aPublicidades = [];
 let precioTotal = 0;
 let contadorProductos = 0;
 
@@ -43,7 +44,32 @@ fetch("js/productos.json").then(response => response.json()).then(jsonCatalogo =
 
 });
 
+fetch("js/publicidades.json").then(response => response.json()).then(jsonPubliciades => {
 
+    jsonPubliciades.forEach(publicidadJson => {
+
+    let nuevaPublicidad = new publicidad(
+        publicidadJson.nombre,
+        publicidadJson.imagenMobile,
+        publicidadJson.imagenTablet,
+        publicidadJson.imagenPC,
+        publicidadJson.altImagen,
+        publicidadJson.id,
+    );
+
+    aPublicidades.push(nuevaPublicidad);
+
+    }); 
+
+});
+
+
+let divPublicidad = document.getElementById("publicidad");
+
+let btnPublicidad = document.createElement("button");
+btnPublicidad.addEventListener('click', () => {
+    verPublicidades();
+});
 
 let sectionPrincipal = document.getElementById("contenedorProductos");
 
@@ -55,7 +81,7 @@ divDetalleCarrito.classList.add("detalleCarrito");
 let localStorageItems;
 
 let pItemsAgregados = document.createElement("p");
-pItemsAgregados.innerText = "ítems agregados";
+pItemsAgregados.innerText = "ítems agregados ";
 let spanItemsAgregados = document.createElement("span");
 spanItemsAgregados.setAttribute("id","itemsCarrito");
 
@@ -70,7 +96,7 @@ pItemsAgregados.append(spanItemsAgregados);
 let localStorageTotalPagar;
 
 let pTotalPagar = document.createElement("p");
-pTotalPagar.innerText = "es el total";
+pTotalPagar.innerText = "es el total ";
 let spanTotalPagar = document.createElement("span");
 spanTotalPagar.setAttribute("id","totalPagar");
 
@@ -129,6 +155,20 @@ function filtrarPorCategoria(categoriaElegida) {
     // Limpiamos la section de productos
     sectionPrincipal.innerHTML = "";
 
+    divPublicidad.innerHTML = "";
+    btnPublicidad.innerHTML = "";
+
+    let numeroAleatorio = Math.ceil(Math.random() * 4);
+    console.log(numeroAleatorio);
+
+    for (const publicidad of aPublicidades) {
+        if(publicidad.getId() == numeroAleatorio){
+            btnPublicidad.append(publicidad.mostrarPublicidad());
+            divPublicidad.append(btnPublicidad);  
+            setTimeout(function() { btnPublicidad.innerHTML = "";}, 10000); 
+        }
+    }
+    
     // Creamos un array para guardar los productos filtrados e indicamos como realizar el filtro por categoría
     let aCatalogoFiltrado = aCatalogo.filter((producto) => producto.getCategoria().includes(categoriaElegida));
 
@@ -151,6 +191,7 @@ function filtrarPorCategoria(categoriaElegida) {
         divFiltros.removeChild(buttonEliminarFiltro); 
         // Limpiamos la sección de productos
         sectionPrincipal.innerHTML = "";
+        divPublicidad.innerHTML = "";
         // Recorro aCatalogo para mostrar el catalogo completo nuevamente
         for (const producto of aCatalogo) {
             sectionPrincipal.append(producto.mostrarProducto());
@@ -585,4 +626,48 @@ function compraRealizada(){
     let sectionProductos = document.querySelector("#contenedorProductos");
         sectionProductos.parentNode.appendChild(modalCompraRealizada);
     return sectionProductos;
+}
+
+/**
+     * Mostrar todas las publicidadades juntas en una modal.
+    */
+function verPublicidades() {
+    let modalDetalle = document.querySelector("#modalProducto");
+    let modalCarrito = document.querySelector("#modalCarrito");
+    let modalCompra = document.querySelector("#modalCompra");
+    if(modalDetalle){
+        modalDetalle.remove();
+    }
+    if (modalCarrito) {
+        modalCarrito.remove();
+    }
+    if (modalCompra) {
+        modalCompra.remove();
+    }
+
+    let modalPublicidades = document.createElement("div");
+    modalPublicidades.setAttribute("id", "modalPublicidades")
+    modalPublicidades.classList.add("modalPublicidades");
+    
+    let aCerrar = document.createElement("a");
+        aCerrar.setAttribute("href", "javascript:void(0)");
+        aCerrar.innerText = "X";
+        aCerrar.addEventListener('click', () => {
+            let cerrar = document.querySelector("#modalPublicidades");
+            cerrar.remove();
+        });
+
+    let h3Publicidades = document.createElement("h3");
+    h3Publicidades.innerText = "Todas las publicidades";
+
+    modalPublicidades.append(aCerrar, h3Publicidades);
+
+    for (const publicidad of aPublicidades) {
+         modalPublicidades.append(publicidad.mostrarPublicidad());
+    }
+
+     // Traemos el div que esta al mismo nivel de la seccion de productos
+     const sectionProductos = document.querySelector("#contenedorProductos");
+     sectionProductos.parentNode.appendChild(modalPublicidades);
+     return sectionProductos;
 }
