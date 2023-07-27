@@ -25,7 +25,7 @@ class publicidad {
         this.#id = id;
     }
 
-     /**
+    /**
      * Obtiene el ID de la publicidad.
      * @returns {number} El ID de la publicidad.
     */
@@ -34,10 +34,6 @@ class publicidad {
     }
 
     mostrarPublicidad() {
-
-        // let aPublicidad = document.createElement("a");
-        // aPublicidad.setAttribute("href","https://www.google.com/");
-
         let picturePublicidad = document.createElement("picture");
 
         let sourceTablet = document.createElement("source");
@@ -53,12 +49,10 @@ class publicidad {
         imgPublicidad.setAttribute("alt",this.#altImagen);
         imgPublicidad.classList.add("img-fluid"); 
 
-        picturePublicidad.append(sourceTablet,sourcePC,imgPublicidad);
+        let btnVerPublicidades = 
 
-        //aPublicidad.append(picturePublicidad);
+        picturePublicidad.append(sourceTablet,sourcePC,imgPublicidad);
 
         return(picturePublicidad);
     }
-
-
- }
+}

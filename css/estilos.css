@@ -385,17 +385,37 @@ header #minicarrito .filtros .btn-eliminar:hover {
     overflow-x: hidden;
     padding: 5% 0%;
 }
+.modalPublicidades {
+	position: fixed;
+	z-index: 2;
+    width: 95%;
+    margin: 2% 2.5%;
+    height: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgb(240 240 240 / 93%);
+    border: 1px solid var(--bg-color-dark);
+    overflow-y: auto; 
+    overflow-x: hidden;
+    padding: 5% 0%;
+}
 /* Estilos para navegadores webkit (Google Chrome, Safari) */
-.modalDetalle::-webkit-scrollbar, .modalCarrito::-webkit-scrollbar, .modalCompra::-webkit-scrollbar, .modalCompraRealizada::-webkit-scrollbar {
+.modalDetalle::-webkit-scrollbar, .modalCarrito::-webkit-scrollbar, .modalCompra::-webkit-scrollbar, .modalCompraRealizada::-webkit-scrollbar, .modalPublicidades::-webkit-scrollbar {
     width: 10px; /* Ancho de la barra de desplazamiento */
 }
-.modalDetalle::-webkit-scrollbar-track, .modalCarrito::-webkit-scrollbar-track, .modalCompra::-webkit-scrollbar-track, .modalCompraRealizada::-webkit-scrollbar-track {
+.modalDetalle::-webkit-scrollbar-track, .modalCarrito::-webkit-scrollbar-track, .modalCompra::-webkit-scrollbar-track, .modalCompraRealizada::-webkit-scrollbar-track, .modalPublicidades::-webkit-scrollbar-track {
     background-color: var(--bg-color-dark); /* Color de fondo de la barra de desplazamiento */
 }
-.modalDetalle::-webkit-scrollbar-thumb, .modalCarrito::-webkit-scrollbar-thumb, .modalCompra::-webkit-scrollbar-thumb, .modalCompraRealizada::-webkit-scrollbar-thumb {
+.modalDetalle::-webkit-scrollbar-thumb, .modalCarrito::-webkit-scrollbar-thumb, .modalCompra::-webkit-scrollbar-thumb, .modalCompraRealizada::-webkit-scrollbar-thumb, .modalPublicidades::-webkit-scrollbar-thumb {
     background-color: var(--primary-color); /* Color del mango de la barra de desplazamiento */
 }
-.modalDetalle::-webkit-scrollbar-thumb:hover, .modalCarrito::-webkit-scrollbar-thumb:hover, .modalCompra::-webkit-scrollbar-thumb:hover, .modalCompraRealizada::-webkit-scrollbar-thumb:hover {
+.modalDetalle::-webkit-scrollbar-thumb:hover, .modalCarrito::-webkit-scrollbar-thumb:hover, .modalCompra::-webkit-scrollbar-thumb:hover, .modalCompraRealizada::-webkit-scrollbar-thumb:hover, .modalPublicidades::-webkit-scrollbar-thumb:hover {
     background-color: var(--primary-color-dark); /* Color del mango de la barra de desplazamiento al pasar el cursor */
 }
 @media screen and (max-width: 568px) {
@@ -445,7 +465,7 @@ header #minicarrito .filtros .btn-eliminar:hover {
         margin: 2% 5%;
     }
 }
-.modalDetalle a, .modalCarrito a, .modalCompra a, .modalCompraRealizada a {
+.modalDetalle a, .modalCarrito a, .modalCompra a, .modalCompraRealizada a, .modalPublicidades a  {
     position: absolute;
     z-index: 3;
     display: flex;
@@ -465,7 +485,8 @@ header #minicarrito .filtros .btn-eliminar:hover {
     font-weight: bold;
     border: 1px solid var(--color-b);
 }
-.modalDetalle a:hover, .modalCarrito a:hover, .modalCompra a:hover, .modalCompraRealizada a:hover {
+
+.modalDetalle a:hover, .modalCarrito a:hover, .modalCompra a:hover, .modalCompraRealizada a:hover, .modalPublicidades a:hover {
 	background-color: var(--primary-color);
 	color: var(--bg-color-dark);
 }
@@ -486,6 +507,11 @@ header #minicarrito .filtros .btn-eliminar:hover {
         margin-bottom: .5em;
     }
 }
+.modalPublicidades img {
+	width: 70%;
+    margin: 1% 15%;
+}
+
 .detalleProducto {
     width: 40%;
     margin: 1% 10%;
@@ -590,18 +616,18 @@ header #minicarrito .filtros .btn-eliminar:hover {
         margin-top: 1em;
     }
 }
-.modalDetalle h3, .modalCarrito h3, .modalCompra h3, .modalCompraRealizada h3 {
+.modalDetalle h3, .modalCarrito h3, .modalCompra h3, .modalCompraRealizada h3, .modalPublicidades h3  {
     width: 100%;
     font-size: 3em;
     margin: 5em 0 1em;
 }
 @media screen and (max-width: 750px) {
-    .modalDetalle h3, .modalCarrito h3, .modalCompra h3, .modalCompraRealizada h3{
+    .modalDetalle h3, .modalCarrito h3, .modalCompra h3, .modalCompraRealizada h3, .modalPublicidades h3{
         margin: .8em 0 0;
         font-size: 2em;
     }
 }
-.modalDetalle p, .modalCarrito p, .modalCompraRealizada p {
+.modalDetalle p, .modalCarrito p, .modalCompraRealizada p, .modalPublicidades p {
 	margin: 0 0 1em 0;
 	text-align: left;
 	color: var(--color-b);
@@ -615,7 +641,7 @@ header #minicarrito .filtros .btn-eliminar:hover {
     font-size: 1.5em;
 }
 @media screen and (max-width: 750px) {
-    .modalDetalle p, .modalCarrito p, .modalCompra p, .modalCompraRealizada p  {
+    .modalDetalle p, .modalCarrito p, .modalCompra p, .modalCompraRealizada p, .modalPublicidades p  {
         font-size: 1.2em;
     }
 }
@@ -779,4 +805,18 @@ fieldset .radioInput {
     text-overflow: ellipsis;
     -webkit-transition: opacity 0.5s;
     transition: opacity 0.5s;
+}
+
+/* Div Publicidad */
+#publicidad{
+    border: none;
+    width: 50%;
+    position: absolute;
+    bottom: 8%;
+    right: 0;
+}
+#publicidad button{
+    border: none;
+    position: absolute;
+
 }
