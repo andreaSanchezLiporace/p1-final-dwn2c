@@ -398,6 +398,7 @@ function realizarCompra() {
     }
 
     if(aCarrito.length > 0){
+    
     let modalCompra = document.createElement("div");
         modalCompra.classList.add("modalCompra");
         modalCompra.setAttribute("id", "modalCompra");
@@ -431,24 +432,29 @@ function realizarCompra() {
         inputNombreCompleto.setAttribute("required", "true");
 
     let spanDireccion = document.createElement("span");
-        spanDireccion.innerText = "Direccion completa";
+        spanDireccion.innerText = "Direccion completa de entrega";
 
     let inputDireccion = document.createElement("input");
         inputDireccion.setAttribute("type", "text");
         inputDireccion.setAttribute("placeholder", "Ingrese la direccion de entrega");
         inputDireccion.setAttribute("required", "true");
 
-    let spanCodigoPostal = document.createElement("span");
-        spanCodigoPostal.innerText = "Codigo postal";
+    let spanTelefono = document.createElement("span");
+        spanTelefono.innerText = "Telefono";
     
-    let inputCodigoPostal = document.createElement("input");
-        inputCodigoPostal.setAttribute("type", "number");
-        inputCodigoPostal.setAttribute("placeholder", "Ingrese su codigo postal");
-        inputCodigoPostal.setAttribute("required", "true");  
-        inputCodigoPostal.setAttribute("minlength", 4);
-        inputCodigoPostal.setAttribute("maxlength", 4);
+    let inputTelefono = document.createElement("input");
+        inputTelefono.setAttribute("type", "number");
+        inputTelefono.setAttribute("placeholder", "Ingrese su telefono");
+        inputTelefono.setAttribute("required", "true"); 
+        
+    let spanFecha = document.createElement("span");
+        spanFecha.innerText = "Fecha de entrega";
+    
+    let inputFecha = document.createElement("input");
+        inputFecha.setAttribute("type", "date");
+        inputFecha.setAttribute("required", "true");
 
-    fieldsetCliente.append(legendCliente, spanNombreCompleto, inputNombreCompleto, spanDireccion, inputDireccion, spanCodigoPostal, inputCodigoPostal);
+    fieldsetCliente.append(legendCliente, spanNombreCompleto, inputNombreCompleto, spanDireccion, inputDireccion, spanTelefono, inputTelefono, spanFecha, inputFecha);
 
     let fieldsetMetodoPago = document.createElement("fieldset");
     let legendMetodoPago = document.createElement("legend");
@@ -460,7 +466,7 @@ function realizarCompra() {
         inputTarjetaDebito.classList.add("radioInput");
         inputTarjetaDebito.setAttribute('type', "radio");
         inputTarjetaDebito.setAttribute('id', "radioDebito");
-        inputTarjetaDebito.setAttribute('name', "radioDebito");
+        inputTarjetaDebito.setAttribute('name', "radioPago");
         inputTarjetaDebito.setAttribute('value', "debito");
     let labelTarjetaDebito = document.createElement("label");
         labelTarjetaDebito.setAttribute("for", "radioDebito");
@@ -472,7 +478,7 @@ function realizarCompra() {
         inputTarjetaCredito.classList.add("radioInput");
         inputTarjetaCredito.setAttribute('type', "radio");
         inputTarjetaCredito.setAttribute('id', "radioCredito");
-        inputTarjetaCredito.setAttribute('name', "radioCredito");
+        inputTarjetaCredito.setAttribute('name', "radioPago");
         inputTarjetaCredito.setAttribute('value', "credito");
 
     let labelTarjetaCredito = document.createElement("label");
@@ -486,6 +492,7 @@ function realizarCompra() {
         inputNombre.setAttribute("type", "text");
         inputNombre.setAttribute("placeholder", "Ingrese el nombre que figura en la tarjeta");
         inputNombre.setAttribute("required", "true");
+        
 
     let spanNumeroTarjeta = document.createElement("span");
         spanNumeroTarjeta.innerText = "Numero de tarjeta";
@@ -507,18 +514,93 @@ function realizarCompra() {
         inputCodigoSeguridad.setAttribute("minlength", 3);
         inputCodigoSeguridad.setAttribute("maxlength", 4);
 
+    let spanCuotas = document.createElement("span");
+        spanCuotas.innerText = "Cuotas";
+
+    let cuotas;
+    let precioEnCuotas = precioTotal;
+
+    let precioCuotas = document.createElement("p");
+        precioCuotas.innerText = "Total a pagar: ";
+
+    let spanPrecioFinalCuotas = document.createElement("span");
+        spanPrecioFinalCuotas.innerText = mostrarPrecioEnPesos(precioEnCuotas);
+
+    let selectCuotas = document.createElement("select");
+        selectCuotas.setAttribute("name","Cuotas");
+        selectCuotas.setAttribute("id","cantCuotas");
+        selectCuotas.addEventListener("change", () => {
+            cuotas = selectCuotas.value;
+            precioEnCuotas = precioTotal / cuotas;
+            spanPrecioFinalCuotas.innerText = mostrarPrecioEnPesos(precioEnCuotas);
+        });
+    
+    let optionDefault = document.createElement("option");
+        optionDefault.setAttribute("value", "1");
+        optionDefault.innerText = "1";
+    
+    let option3ctas = document.createElement("option");
+        option3ctas.setAttribute("value", "3");
+        option3ctas.innerText = "3";
+    
+    let option6ctas = document.createElement("option");
+        option6ctas.setAttribute("value", "6");
+        option6ctas.innerText = "6";
+
+    let option9ctas = document.createElement("option");
+        option9ctas.setAttribute("value", "9");
+        option9ctas.innerText = "9";
+    
+    let option12ctas = document.createElement("option");
+        option12ctas.setAttribute("value", "12");
+        option12ctas.innerText = "12";
+
+    selectCuotas.append(optionDefault, option3ctas, option6ctas, option9ctas, option12ctas);
+
     let buttonComprar = document.createElement("button");
         buttonComprar.setAttribute("type", "submit");
         buttonComprar.innerText = "Comprar";
         buttonComprar.classList.add("btn-finCompra");
+
+    inputNombreCompleto.addEventListener("input", (e) => {
+            e.target.setCustomValidity("");
+          });
+
+    inputNombre.addEventListener("input", (e) => {
+            e.target.setCustomValidity("");
+          });
     
     formCompra.addEventListener('submit', (e) => {
         e.preventDefault();
-        compraRealizada();
-    })
+
+        const regexNombreCompleto = new RegExp('^[A-Z]+$', 'i');
+
+        const regexNombreTarjeta = new RegExp('^[A-Z]+$');
+
+        if (!(inputNombreCompleto.value.trim())){
+            console.log("ENTRE AL IF CAMPO VACIO - NOMBRE COMPLETO");
+            inputNombreCompleto.setCustomValidity("Campo vacio");
+            inputNombreCompleto.reportValidity();
+        } else if(!regexNombreCompleto.test(inputNombreCompleto.value.trim())){
+            console.log("ENTRE AL IF SOLO LETRAS - NOMBRE COMPLETO");
+            inputNombreCompleto.setCustomValidity("Campo solo letras");
+            inputNombreCompleto.reportValidity();
+        } else if (!(inputNombre.value.trim())){
+            console.log("ENTRE AL IF CAMPO VACIO - NOMBRE TARJETA");
+            inputNombre.setCustomValidity("Campo vacio");
+            inputNombre.reportValidity();
+        } else if(!regexNombreTarjeta.test(inputNombre.value.trim())){
+            console.log("ENTRE AL IF SOLO LETRAS - NOMBRE TARJETA");
+            inputNombre.setCustomValidity("Campo solo letras");
+            inputNombre.reportValidity();
+        } else {
+            compraRealizada();
+        }
+        
+    });
 
     divTipoTarjetas.append(inputTarjetaDebito, labelTarjetaDebito, inputTarjetaCredito, labelTarjetaCredito);
-    divInfoTarjetas.append(spanNombre, inputNombre, spanNumeroTarjeta, inputNumeroTarjeta, spanCodigoSeguridad, inputCodigoSeguridad);
+    divInfoTarjetas.append(spanNombre, inputNombre, spanNumeroTarjeta, inputNumeroTarjeta, spanCodigoSeguridad, inputCodigoSeguridad, spanCuotas, selectCuotas, precioCuotas, spanPrecioFinalCuotas);
     fieldsetMetodoPago.append(legendMetodoPago, divTipoTarjetas,  divInfoTarjetas);
 
     formCompra.append(fieldsetCliente, fieldsetMetodoPago, buttonComprar);
