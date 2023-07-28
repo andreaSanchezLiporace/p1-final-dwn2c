@@ -514,8 +514,11 @@ function realizarCompra() {
         inputCodigoSeguridad.setAttribute("minlength", 3);
         inputCodigoSeguridad.setAttribute("maxlength", 4);
 
+
+    let divCuotas = document.createElement("div");
+    divCuotas.classList.add("divCuotas");
     let spanCuotas = document.createElement("span");
-        spanCuotas.innerText = "Cuotas";
+        spanCuotas.innerText = "¿En cuántas cuotas pagarás?";
 
     let cuotas;
     let precioEnCuotas = precioTotal;
@@ -537,23 +540,23 @@ function realizarCompra() {
     
     let optionDefault = document.createElement("option");
         optionDefault.setAttribute("value", "1");
-        optionDefault.innerText = "1";
+        optionDefault.innerText = "Pagar en 1 cuota";
     
     let option3ctas = document.createElement("option");
         option3ctas.setAttribute("value", "3");
-        option3ctas.innerText = "3";
+        option3ctas.innerText = "Pagar en 3 cuotas";
     
     let option6ctas = document.createElement("option");
         option6ctas.setAttribute("value", "6");
-        option6ctas.innerText = "6";
+        option6ctas.innerText = "Pagar en 6 cuotas";
 
     let option9ctas = document.createElement("option");
         option9ctas.setAttribute("value", "9");
-        option9ctas.innerText = "9";
+        option9ctas.innerText = "Pagar en 9 cuotas";
     
     let option12ctas = document.createElement("option");
         option12ctas.setAttribute("value", "12");
-        option12ctas.innerText = "12";
+        option12ctas.innerText = "Pagar en 12 cuotas";
 
     selectCuotas.append(optionDefault, option3ctas, option6ctas, option9ctas, option12ctas);
 
@@ -600,8 +603,9 @@ function realizarCompra() {
     });
 
     divTipoTarjetas.append(inputTarjetaDebito, labelTarjetaDebito, inputTarjetaCredito, labelTarjetaCredito);
-    divInfoTarjetas.append(spanNombre, inputNombre, spanNumeroTarjeta, inputNumeroTarjeta, spanCodigoSeguridad, inputCodigoSeguridad, spanCuotas, selectCuotas, precioCuotas, spanPrecioFinalCuotas);
-    fieldsetMetodoPago.append(legendMetodoPago, divTipoTarjetas,  divInfoTarjetas);
+    divInfoTarjetas.append(spanNombre, inputNombre, spanNumeroTarjeta, inputNumeroTarjeta, spanCodigoSeguridad, inputCodigoSeguridad);
+    divCuotas.append(spanCuotas, selectCuotas, precioCuotas, spanPrecioFinalCuotas);  
+    fieldsetMetodoPago.append(legendMetodoPago, divTipoTarjetas, divInfoTarjetas, divCuotas);
 
     formCompra.append(fieldsetCliente, fieldsetMetodoPago, buttonComprar);
 
