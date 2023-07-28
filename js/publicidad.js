@@ -9,20 +9,20 @@ class publicidad {
      * @param {string} imagen - La URL de la imagen del producto para agregarle al atributo src.
      * @param {string} altImagen - La descripciòn de la imágen para agregarle al atributo alt.
     */
-    #nombre;
-    #imagenMobile;
-    #imagenTablet;
-    #ImagenPC;
-    #altImagen;
-    #id;
+    nombre;
+    imagenMobile;
+    imagenTablet;
+    imagenPC;
+    altImagen;
+    id;
 
     constructor(nombre, imagenMobile, imagenTablet, imagenPC, altImagen, id){
-        this.#nombre = nombre;
-        this.#imagenMobile = imagenMobile;
-        this.#imagenTablet = imagenTablet;
-        this.#ImagenPC = imagenPC;
-        this.#altImagen = altImagen;
-        this.#id = id;
+        this.nombre = nombre;
+        this.imagenMobile = imagenMobile;
+        this.imagenTablet = imagenTablet;
+        this.imagenPC = imagenPC;
+        this.altImagen = altImagen;
+        this.id = id;
     }
 
     /**
@@ -30,7 +30,7 @@ class publicidad {
      * @returns {number} El ID de la publicidad.
     */
     getId () {
-        return this.#id;
+        return this.id;
     }
 
     mostrarPublicidad() {
@@ -38,15 +38,15 @@ class publicidad {
 
         let sourceTablet = document.createElement("source");
         sourceTablet.setAttribute("media","min-width:768px");
-        sourceTablet.setAttribute("srcset", this.#imagenTablet); 
+        sourceTablet.setAttribute("srcset", this.imagenTablet); 
 
         let sourcePC = document.createElement("source");
         sourcePC.setAttribute("media","min-width:992px");
-        sourcePC.setAttribute("srcset", this.#ImagenPC); 
+        sourcePC.setAttribute("srcset", this.imagenPC); 
 
         let imgPublicidad = document.createElement("img");
-        imgPublicidad.setAttribute("src",this.#imagenMobile); 
-        imgPublicidad.setAttribute("alt",this.#altImagen);
+        imgPublicidad.setAttribute("src",this.imagenMobile); 
+        imgPublicidad.setAttribute("alt",this.altImagen);
         imgPublicidad.classList.add("img-fluid"); 
 
         let btnVerPublicidades = 

@@ -78,6 +78,8 @@ let divMiniCarrito = document.getElementById("minicarrito");
 let divDetalleCarrito = document.createElement("div");
 divDetalleCarrito.classList.add("detalleCarrito");
 
+//LOCAL STORAGE
+
 let localStorageItems;
 
 let pItemsAgregados = document.createElement("p");
@@ -106,6 +108,15 @@ if(localStorage.getItem("totalPagar")){
 }else{
     spanTotalPagar.innerText = " 0";
 }
+
+// if(localStorage.getItem("aCarrito")){
+//     localStorageCarrito =  localStorage.getItem("aCarrito");
+//     aCarrito = localStorageCarrito;
+// }else{
+//     aCarrito =[];
+// }
+
+//LOCAL STORAGE
 
 pTotalPagar.append(spanTotalPagar);
 
@@ -222,9 +233,11 @@ function agregarAlCarrito(producto){
     let itemCarritoModal = document.querySelector("#pCantProductosModal");
     let precioFinalModal = document.querySelector("#pPrecioTotalModal");
 
+    let productoPublico;
     precioTotal += producto.getPrecio();
     if (aCarrito.length == 0) {
         producto.cantidad = 1;
+
         aCarrito.push(producto);
     } else {
         let productoExistente = false;
@@ -365,6 +378,9 @@ function verCarrito () {
                     let precioFinal = document.querySelector("#totalPagar");
                     precioFinal.innerText = precioTotal;
                     itemCarrito.innerText = contadorProductos;
+                    localStorage.setItem("itemsCarrito", contadorProductos);
+                    localStorage.setItem("totalPagar", precioTotal);
+                    localStorage.setItem("aCarrito", JSON.stringify(aCarrito));
                 });
             let buttonComprar = document.createElement("button");
                 buttonComprar.innerText = "Iniciar Compra";
