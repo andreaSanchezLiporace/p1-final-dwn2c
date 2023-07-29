@@ -157,7 +157,7 @@ class producto {
             let pCategoria = document.createElement("p");
                 pCategoria.innerText = `Categoria: ${this.categoria}`;
             let pPrecio = document.createElement("p");
-                pPrecio.innerText = `Precio: $ ${(this.precio).toLocaleString()}.-`;
+                pPrecio.innerText = `Precio: ${mostrarPrecioEnPesos(this.precio)}.-`;
             let pDescripcion = document.createElement("p");
                 pDescripcion.classList.add("pDescripcionCard");
                 pDescripcion.innerText = `Descripcion: ${this.descripcion}`;
@@ -224,7 +224,7 @@ class producto {
                                 let pCategoria = document.createElement("p");
                                     pCategoria.innerText = `Categoria: ${this.categoria}`;
                                 let pPrecio = document.createElement("p");
-                                    pPrecio.innerText = `Precio: $ ${this.precio.toLocaleString()}.-`;
+                                    pPrecio.innerText = `Precio: ${mostrarPrecioEnPesos(this.precio)}.-`;
                                 let pDescripcion = document.createElement("p");
                                     pDescripcion.innerText = `${this.descripcion}`;
                             // Botón agregar - detalle producto
@@ -277,9 +277,9 @@ class producto {
                 pNombreMiniProducto.innerText = `${this.nombre}`;
             let pPrecioMiniProducto = document.createElement("p");
             let precioSubtotalProducto = this.precio * this.cantidad;
-                pPrecioMiniProducto.innerText = `Subtotal: $${precioSubtotalProducto.toLocaleString()}.-`;
+                pPrecioMiniProducto.innerText = `Subtotal: ${mostrarPrecioEnPesos(precioSubtotalProducto)}.-`;
             let masMenosProductos = document.createElement("div");
-                masMenosProductos.classList.add("masMenosProductos")
+                masMenosProductos.classList.add("masMenosProductos");
             let pCantProducto = document.createElement("p");
                 pCantProducto.classList.add("pCantidadProducto");
                 pCantProducto.innerText = `${this.cantidad}`;
@@ -294,7 +294,7 @@ class producto {
                             if (producto.id == productoId){
                                 agregarAlCarrito(producto);
                                 precioSubtotalProducto += this.precio;
-                                pPrecioMiniProducto.innerText = `Subtotal: $${precioSubtotalProducto.toLocaleString()}.-`;
+                                pPrecioMiniProducto.innerText = `Subtotal: ${mostrarPrecioEnPesos(precioSubtotalProducto)}.-`;
                                 pCantProducto.innerText = `${this.cantidad}`;
                                 break;
                             }
@@ -312,7 +312,7 @@ class producto {
                     if(aCarrito[i].id == productoId) {
                         eliminarDelCarrito(aCarrito[i], contenedorProducto, i);
                         precioSubtotalProducto -= this.precio;
-                        pPrecioMiniProducto.innerText = `Subtotal: $${precioSubtotalProducto.toLocaleString()}.-`;
+                        pPrecioMiniProducto.innerText = `Subtotal: ${mostrarPrecioEnPesos(precioSubtotalProducto)}.-`;
                         pCantProducto.innerText = `${this.cantidad}`;
                         break;
                     }
@@ -321,6 +321,21 @@ class producto {
         // Apendeamos estructura a la modal
         masMenosProductos.append(buttonAgregarCarrito, pCantProducto, buttonEliminarDelCarrito)
         divMiniProducto.append(pNombreMiniProducto, pPrecioMiniProducto, masMenosProductos);
+        return divMiniProducto;
+    }
+
+    productoResumenCompra () {
+        let divMiniProducto = document.createElement("div");
+            divMiniProducto.dataset.id = this.id;
+            let pNombreMiniProducto = document.createElement("p");
+                pNombreMiniProducto.innerText = `${this.nombre}`;
+            let pPrecioMiniProducto = document.createElement("p");
+            let precioSubtotalProducto = this.precio * this.cantidad;
+                pPrecioMiniProducto.innerText = `Subtotal: ${mostrarPrecioEnPesos(precioSubtotalProducto)}.-`;
+            let pCantProducto = document.createElement("p");
+                pCantProducto.classList.add("pCantidadProducto");
+                pCantProducto.innerText = `Cantidad: ${this.cantidad}`;
+        divMiniProducto.append(pNombreMiniProducto, pPrecioMiniProducto,pCantProducto);  
         return divMiniProducto;
     }
 }

@@ -9,7 +9,6 @@ function mostrarPrecioEnPesos (precio){
   };
 
 window.addEventListener("keydown", (e) => {
-  console.log(e.key);
   if(e.key == 'Escape'){
       let modalCarrito = document.querySelector("#modalCarrito");
       let modalCompra = document.querySelector("#modalCompra");

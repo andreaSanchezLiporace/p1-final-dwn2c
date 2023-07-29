@@ -49,8 +49,6 @@ class publicidad {
         imgPublicidad.setAttribute("alt",this.altImagen);
         imgPublicidad.classList.add("img-fluid"); 
 
-        let btnVerPublicidades = 
-
         picturePublicidad.append(sourceTablet,sourcePC,imgPublicidad);
 
         return(picturePublicidad);

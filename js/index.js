@@ -11,6 +11,8 @@ let aCategorias = [];
 let aPublicidades = [];
 let precioTotal = 0;
 let contadorProductos = 0;
+let cuotas = 1;
+let precioEnCuotas = precioTotal;
 
 /** 
  * Mostramos el catalogo en l aprimer vista del sitio
@@ -88,8 +90,9 @@ let spanItemsAgregados = document.createElement("span");
 spanItemsAgregados.setAttribute("id","itemsCarrito");
 
 if(localStorage.getItem("itemsCarrito")){
-    localStorageItems =  localStorage.getItem("itemsCarrito");
-    spanItemsAgregados.innerText = localStorageItems;
+    localStorageItems = localStorage.getItem("itemsCarrito");
+    contadorProductos = parseInt(localStorageItems);
+    spanItemsAgregados.innerText = parseInt(localStorageItems);
 }else{
     spanItemsAgregados.innerText = " 0";
 }
@@ -104,17 +107,35 @@ spanTotalPagar.setAttribute("id","totalPagar");
 
 if(localStorage.getItem("totalPagar")){
     localStorageTotalPagar =  localStorage.getItem("totalPagar");
+    console.log(parseFloat(localStorageTotalPagar));
+    precioTotal = parseFloat(localStorageTotalPagar);
     spanTotalPagar.innerText = mostrarPrecioEnPesos(parseFloat(localStorageTotalPagar));
 }else{
-    spanTotalPagar.innerText = " 0";
+    precioTotal = 0;
+    spanTotalPagar.innerText = " 0"; 
 }
 
-// if(localStorage.getItem("aCarrito")){
-//     localStorageCarrito =  localStorage.getItem("aCarrito");
-//     aCarrito = localStorageCarrito;
-// }else{
-//     aCarrito =[];
-// }
+let localStorageCarrito;
+
+if(localStorage.getItem("aCarrito")){
+    localStorageCarrito = localStorage.getItem("aCarrito");
+    
+    for (const productoLocalStorage of JSON.parse(localStorageCarrito)) {
+        let nuevoProducto = new producto(
+            productoLocalStorage.nombre,
+            productoLocalStorage.imagen,
+            productoLocalStorage.altImagen,
+            productoLocalStorage.id,
+            productoLocalStorage.categoria,
+            productoLocalStorage.precio,
+            productoLocalStorage.descripcion,
+            productoLocalStorage.cantidad,
+        );
+        aCarrito.push(nuevoProducto);
+    }
+}else{
+    aCarrito = [];
+}
 
 //LOCAL STORAGE
 
@@ -167,6 +188,9 @@ function filtrarPorCategoria(categoriaElegida) {
     sectionPrincipal.innerHTML = "";
 
     divPublicidad.innerHTML = "";
+
+    
+    
     btnPublicidad.innerHTML = "";
 
     let numeroAleatorio = Math.ceil(Math.random() * 4);
@@ -233,7 +257,6 @@ function agregarAlCarrito(producto){
     let itemCarritoModal = document.querySelector("#pCantProductosModal");
     let precioFinalModal = document.querySelector("#pPrecioTotalModal");
 
-    let productoPublico;
     precioTotal += producto.getPrecio();
     if (aCarrito.length == 0) {
         producto.cantidad = 1;
@@ -257,10 +280,10 @@ function agregarAlCarrito(producto){
     contadorProductos++;
     if(itemCarritoModal || precioFinalModal != null){
         itemCarritoModal.innerText = "Cantidad de productos: " + contadorProductos;
-        precioFinalModal.innerText = "Total a pagar: $" + mostrarPrecioEnPesos(precioTotal);
+        precioFinalModal.innerText = "Total a pagar: " + mostrarPrecioEnPesos(parseFloat(precioTotal));
     }
     itemCarrito.innerText = contadorProductos;
-    precioFinal.innerText = mostrarPrecioEnPesos(precioTotal);
+    precioFinal.innerText = mostrarPrecioEnPesos(parseFloat(precioTotal));
 
     localStorage.setItem("itemsCarrito", contadorProductos);
     localStorage.setItem("totalPagar", precioTotal);
@@ -278,8 +301,13 @@ function eliminarDelCarrito(producto, contenedorProducto, indice){
     let itemCarritoModal = document.querySelector("#pCantProductosModal");
     let precioFinalModal = document.querySelector("#pPrecioTotalModal");
 
+    console.log('precio sin convertir:' + precioTotal);
+    parseFloat(precioTotal);
+    console.log(precioTotal);
+
     if(producto.cantidad > 1){
         precioTotal -= producto.getPrecio();
+        console.log(precioTotal);
         for (let i = 0; i < aCarrito.length; i++) {
             if (aCarrito[i].getId() == producto.getId()) {
                 aCarrito[i].cantidad -= 1;
@@ -287,7 +315,7 @@ function eliminarDelCarrito(producto, contenedorProducto, indice){
             }
         }
     } else {
-        precioTotal -= producto.getPrecio();
+        precioTotal -= producto.precio;
         aCarrito.splice(indice, 1);
         contenedorProducto.remove();
     }
@@ -295,10 +323,10 @@ function eliminarDelCarrito(producto, contenedorProducto, indice){
     contadorProductos--;
         if(itemCarritoModal || precioFinalModal != null){
             itemCarritoModal.innerText = "Cantidad de productos: " + contadorProductos;
-            precioFinalModal.innerText = "Total a pagar: $" + mostrarPrecioEnPesos(precioTotal);
+            precioFinalModal.innerText = "Total a pagar: " + mostrarPrecioEnPesos(parseFloat(precioTotal));
         }
         itemCarrito.innerText = contadorProductos;
-        precioFinal.innerText = mostrarPrecioEnPesos(precioTotal);
+        precioFinal.innerText = mostrarPrecioEnPesos(parseFloat(precioTotal));
 
         localStorage.setItem("itemsCarrito", contadorProductos);
         localStorage.setItem("totalPagar", precioTotal);
@@ -348,13 +376,25 @@ function verCarrito () {
 
         let totalesCarrito = document.createElement("div");
             totalesCarrito.classList.add("totalesCarrito");
+
             let pPrecioTotal = document.createElement("p");
                 pPrecioTotal.setAttribute('id','pPrecioTotalModal');
-                pPrecioTotal.innerText = "Total a pagar: " + mostrarPrecioEnPesos(precioTotal);
+                if(localStorage.getItem("totalPagar")){
+                    localStorageTotalPagar =  localStorage.getItem("totalPagar");
+                    pPrecioTotal.innerText = "Total a pagar: " + mostrarPrecioEnPesos(parseFloat(localStorageTotalPagar));
+                }else{
+                    pPrecioTotal.innerText = "Total a pagar: 0"; 
+                }
+
             let pCantProductos = document.createElement("p");
                 pCantProductos.setAttribute('id','pCantProductosModal');
-                pCantProductos.innerText = "Cantidad de productos: " + contadorProductos;
-
+                if(localStorage.getItem("itemsCarrito")){
+                    localStorageItems = localStorage.getItem("itemsCarrito");
+                    pCantProductos.innerText = "Cantidad de productos: " + parseInt(localStorageItems);
+                }else{
+                    pCantProductos.innerText = "0"; 
+                }
+                
             let divProductosCarrito = document.createElement("div");
                 divProductosCarrito.classList.add("productosCarrito");
                 for (const producto of aCarrito) {
@@ -378,6 +418,7 @@ function verCarrito () {
                     let precioFinal = document.querySelector("#totalPagar");
                     precioFinal.innerText = precioTotal;
                     itemCarrito.innerText = contadorProductos;
+
                     localStorage.setItem("itemsCarrito", contadorProductos);
                     localStorage.setItem("totalPagar", precioTotal);
                     localStorage.setItem("aCarrito", JSON.stringify(aCarrito));
@@ -404,6 +445,8 @@ function verCarrito () {
  * @returns {Element} Una ventana modal con el form de compra
 */
 function realizarCompra() {
+    cuotas = 1;
+    
     let modalDetalle = document.querySelector("#modalProducto");
     let modalCarrito = document.querySelector("#modalCarrito");
     if(modalDetalle){
@@ -536,14 +579,13 @@ function realizarCompra() {
     let spanCuotas = document.createElement("span");
         spanCuotas.innerText = "¿En cuántas cuotas pagarás?";
 
-    let cuotas;
-    let precioEnCuotas = precioTotal;
+    precioEnCuotas = precioTotal;
 
     let precioCuotas = document.createElement("p");
-        precioCuotas.innerText = "Total a pagar: ";
+        precioCuotas.innerText = "Total a pagar por cuota: ";
 
     let spanPrecioFinalCuotas = document.createElement("span");
-        spanPrecioFinalCuotas.innerText = mostrarPrecioEnPesos(precioEnCuotas);
+        spanPrecioFinalCuotas.innerText = mostrarPrecioEnPesos(parseFloat(precioEnCuotas));
 
     let selectCuotas = document.createElement("select");
         selectCuotas.setAttribute("name","Cuotas");
@@ -551,7 +593,7 @@ function realizarCompra() {
         selectCuotas.addEventListener("change", () => {
             cuotas = selectCuotas.value;
             precioEnCuotas = precioTotal / cuotas;
-            spanPrecioFinalCuotas.innerText = mostrarPrecioEnPesos(precioEnCuotas);
+            spanPrecioFinalCuotas.innerText = mostrarPrecioEnPesos(parseFloat(precioEnCuotas));
         });
     
     let optionDefault = document.createElement("option");
@@ -685,14 +727,6 @@ function compraRealizada(){
         modalCompraRealizada.classList.add("modalCompraRealizada");
         modalCompraRealizada.setAttribute("id", "modalCompraRealizada");
 
-    let aCerrar = document.createElement("a");
-        aCerrar.setAttribute("href", "javascript:void(0)");
-        aCerrar.innerText = "X";
-        aCerrar.addEventListener('click', () => {
-            let cerrar = document.querySelector("#modalCompraRealizada");
-            cerrar.remove();
-        });
-
     let h3CompraRealizada = document.createElement("h3");
         h3CompraRealizada.innerText = "Compra Exitosa";
 
@@ -700,7 +734,30 @@ function compraRealizada(){
         pCompraRealizada1.innerText = "Tu transacción se realizó con éxito";
 
     let pCompraRealizada2 = document.createElement("p");
-        pCompraRealizada2.innerText = "¡¡Gracias por elegirnos!!";
+        pCompraRealizada2.innerText = "Resumen de productos adquiridos";
+
+    let divProductosCarrito = document.createElement("div");
+        divProductosCarrito.classList.add("productosCarrito");
+        for (const producto of aCarrito) {
+                divProductosCarrito.append(producto.productoResumenCompra());
+        }
+
+    let pCantProductos = document.createElement("p");
+        pCantProductos.setAttribute('id','pCantProductosModal');
+        pCantProductos.innerText = "Cantidad de productos: " + parseInt(contadorProductos);
+
+    // let pPrecioTotal = document.createElement("p");
+    //     pPrecioTotal.setAttribute('id','pPrecioTotalModal');
+    //     pPrecioTotal.innerText = "Total a pagar: " + mostrarPrecioEnPesos(parseFloat(precioTotal));
+
+    let pCantCuotas = document.createElement("p");
+    pCantCuotas.innerText = `Total cuotas: ${cuotas}`;
+
+    let pPrecioEnCuotas = document.createElement("p");
+    pPrecioEnCuotas.innerText = `Precio de cada cuota: ${mostrarPrecioEnPesos(parseFloat(precioEnCuotas))}`;
+
+    let pCompraRealizada3 = document.createElement("p");
+        pCompraRealizada3.innerText = "¡¡Gracias por elegirnos!!";
 
     let buttonVolver = document.createElement("Button");
         buttonVolver.classList.add("btnVolver");
@@ -718,11 +775,15 @@ function compraRealizada(){
 
             precioFinal.innerText = precioTotal;
             itemCarrito.innerText = contadorProductos;
-            
+
+            localStorage.setItem("itemsCarrito", contadorProductos);
+            localStorage.setItem("totalPagar", precioTotal);
+            localStorage.setItem("aCarrito", JSON.stringify(aCarrito));
+
             cerrar.remove();
         });
 
-    modalCompraRealizada.append(aCerrar, h3CompraRealizada, pCompraRealizada1, pCompraRealizada2, buttonVolver);
+    modalCompraRealizada.append(h3CompraRealizada, pCompraRealizada1, pCompraRealizada2, divProductosCarrito, pCantCuotas, pPrecioEnCuotas, pCantProductos, pCompraRealizada3, buttonVolver);
     // Traemos el div que esta al mismo nivel de la seccion de productos
     // No termino de darme cuenta como crear un hijo de la modal carrito
     let sectionProductos = document.querySelector("#contenedorProductos");
