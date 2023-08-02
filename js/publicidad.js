@@ -16,7 +16,7 @@ class publicidad {
     altImagen;
     id;
 
-    constructor(nombre, imagenMobile, imagenTablet, imagenPC, altImagen, id){
+    constructor(nombre, imagenMobile, imagenTablet, imagenPC, altImagen, id) {
         this.nombre = nombre;
         this.imagenMobile = imagenMobile;
         this.imagenTablet = imagenTablet;

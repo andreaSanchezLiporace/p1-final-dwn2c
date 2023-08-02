@@ -46,9 +46,9 @@ fetch("js/productos.json").then(response => response.json()).then(jsonCatalogo =
 
 });
 
-fetch("js/publicidades.json").then(response => response.json()).then(jsonPubliciades => {
+fetch("js/publicidades.json").then(response => response.json()).then(jsonPublicidades => {
 
-    jsonPubliciades.forEach(publicidadJson => {
+    jsonPublicidades.forEach(publicidadJson => {
 
     let nuevaPublicidad = new publicidad(
         publicidadJson.nombre,
@@ -477,6 +477,7 @@ function realizarCompra() {
         pCompra1.innerText = "Completá el formulario con los tus datos y con los datos del medio de pago que utilizarás";
 
     let formCompra = document.createElement("form");
+        formCompra.setAttribute("id","formularioCompra");
 
     let fieldsetCliente = document.createElement("fieldset");
     let legendCliente = document.createElement("legend");
@@ -638,6 +639,9 @@ function realizarCompra() {
 
         const regexNombreTarjeta = new RegExp('^[A-Z]+$');
 
+        console.log(inputNumeroTarjeta.value);
+        console.log((inputNumeroTarjeta.value.trim()).length);
+
         if (!(inputNombreCompleto.value.trim())){
             console.log("ENTRE AL IF CAMPO VACIO - NOMBRE COMPLETO");
             inputNombreCompleto.setCustomValidity("Campo vacio");
@@ -652,8 +656,14 @@ function realizarCompra() {
             inputNombre.reportValidity();
         } else if(!regexNombreTarjeta.test(inputNombre.value.trim())){
             console.log("ENTRE AL IF SOLO LETRAS - NOMBRE TARJETA");
-            inputNombre.setCustomValidity("Campo solo letras");
+            inputNombre.setCustomValidity("Campo solo mayusculas");
             inputNombre.reportValidity();
+        } else if (!(inputNumeroTarjeta.value.trim())) {
+            inputNumeroTarjeta.setCustomValidity("Campo vacio");
+            inputNumeroTarjeta.reportValidity();
+        } else if ((inputNumeroTarjeta.value.trim()).length != 16) {
+            inputNumeroTarjeta.setCustomValidity("El campo acepta como minimo y maximo 16 caracteres");
+            inputNumeroTarjeta.reportValidity();
         } else {
             compraRealizada();
         }
