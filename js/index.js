@@ -730,11 +730,11 @@ function compraRealizada(){
     let h3CompraRealizada = document.createElement("h3");
         h3CompraRealizada.innerText = "Compra Exitosa";
 
-    let pCompraRealizada1 = document.createElement("p");
+    let pCompraRealizada1 = document.createElement("h4");
         pCompraRealizada1.innerText = "Tu transacción se realizó con éxito";
 
-    let pCompraRealizada2 = document.createElement("p");
-        pCompraRealizada2.innerText = "Resumen de productos adquiridos";
+    let pCompraRealizada2 = document.createElement("h5");
+        pCompraRealizada2.innerText = "Acabas de adquirir los siguientes productos:";
 
     let divProductosCarrito = document.createElement("div");
         divProductosCarrito.classList.add("productosCarrito");
