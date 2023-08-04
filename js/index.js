@@ -505,14 +505,22 @@ function realizarCompra() {
     let inputTelefono = document.createElement("input");
         inputTelefono.setAttribute("type", "number");
         inputTelefono.setAttribute("placeholder", "Ingrese su telefono");
-        inputTelefono.setAttribute("required", "true"); 
+        inputTelefono.setAttribute("required", "true");
+        inputTelefono.setAttribute("minlength", 7);
         
     let spanFecha = document.createElement("span");
-        spanFecha.innerText = "Fecha de entrega";
+        spanFecha.innerText = "Indique una fecha de entrega a partir de mañana";
+
+    // Obtener el año actual
+    const añoActual = new Date().getFullYear();
+    const fechaActual = new Date().getDate() + 1;
+    const mesActual = new Date().getMonth() + 1;
     
     let inputFecha = document.createElement("input");
         inputFecha.setAttribute("type", "date");
         inputFecha.setAttribute("required", "true");
+        // Establecer el atributo "min" para limitar el año de partida
+        inputFecha.setAttribute('min', `${añoActual}-${mesActual.toString().padStart(2, '0')}-${fechaActual.toString().padStart(2, '0')}`);
 
     fieldsetCliente.append(legendCliente, spanNombreCompleto, inputNombreCompleto, spanDireccion, inputDireccion, spanTelefono, inputTelefono, spanFecha, inputFecha);
 
@@ -553,7 +561,6 @@ function realizarCompra() {
         inputNombre.setAttribute("placeholder", "Ingrese el nombre que figura en la tarjeta");
         inputNombre.setAttribute("required", "true");
         
-
     let spanNumeroTarjeta = document.createElement("span");
         spanNumeroTarjeta.innerText = "Numero de tarjeta";
     
@@ -563,6 +570,14 @@ function realizarCompra() {
         inputNumeroTarjeta.setAttribute("required", "true");  
         inputNumeroTarjeta.setAttribute("minlength", 1);
         inputNumeroTarjeta.setAttribute("maxlength", 16);
+
+    let spanFechaVencimiento = document.createElement("span");
+        spanFechaVencimiento.innerText = "Fecha de vencimiento";
+
+    let inputFechaVencimiento = document.createElement("input");
+        inputFechaVencimiento.setAttribute("type", "text");
+        inputFechaVencimiento.setAttribute("placeholder", "MM/YY");
+        inputFechaVencimiento.setAttribute("required", "true");  
 
     let spanCodigoSeguridad = document.createElement("span");
         spanCodigoSeguridad.innerText = "Codigo de seguridad";
@@ -631,16 +646,55 @@ function realizarCompra() {
     inputNombre.addEventListener("input", (e) => {
             e.target.setCustomValidity("");
           });
+
+    inputNumeroTarjeta.addEventListener("input", (e) => {
+        e.target.setCustomValidity("");
+        }); 
+
+    inputCodigoSeguridad.addEventListener("input", (e) => {
+        e.target.setCustomValidity("");
+        }); 
     
+    inputFechaVencimiento.addEventListener("input", (e) => {
+        e.target.setCustomValidity("");
+        }); 
+
+    inputTelefono.addEventListener("input", (e) => {
+        e.target.setCustomValidity("");
+        });
+
     formCompra.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        validarForm();
+
+    });
+
+    window.addEventListener("keydown", (e) => {
+  
+        if(e.key == 'Enter')
+        {
+         let formCompra = document.querySelector("#formularioCompra");
+          if(formCompra){
+            validarForm();
+          }
+        }
+     })
+
+    function validarForm() {
         const regexNombreCompleto = new RegExp('^[A-Z]+$', 'i');
 
         const regexNombreTarjeta = new RegExp('^[A-Z]+$');
 
-        console.log(inputNumeroTarjeta.value);
-        console.log((inputNumeroTarjeta.value.trim()).length);
+        const regexNumeroTarjeta = new RegExp('^\\d{16}$');
+
+        const regexCodigoSeguridadMin = new RegExp('^\\d{3}$');
+
+        const regexCodigoSeguridadMax = new RegExp('^\\d{4}$');
+
+        const regexFechaVencimiento = new RegExp ('^(0[1-9]|1[012])\\/\\d{2}$');
+
+        const regexTelefono = new RegExp('^\\d{7,20}$');
 
         if (!(inputNombreCompleto.value.trim())){
             console.log("ENTRE AL IF CAMPO VACIO - NOMBRE COMPLETO");
@@ -661,17 +715,26 @@ function realizarCompra() {
         } else if (!(inputNumeroTarjeta.value.trim())) {
             inputNumeroTarjeta.setCustomValidity("Campo vacio");
             inputNumeroTarjeta.reportValidity();
-        } else if ((inputNumeroTarjeta.value.trim()).length != 16) {
-            inputNumeroTarjeta.setCustomValidity("El campo acepta como minimo y maximo 16 caracteres");
+        } else if (!regexNumeroTarjeta.test(inputNumeroTarjeta.value)) {
+            inputNumeroTarjeta.setCustomValidity("El campo acepta como minimo y maximo 16 números");
             inputNumeroTarjeta.reportValidity();
+        } else if (!regexCodigoSeguridadMin.test(inputCodigoSeguridad.value) && !regexCodigoSeguridadMax.test(inputCodigoSeguridad.value)){
+            inputCodigoSeguridad.setCustomValidity("El campo acepta de 3 a 4 números");
+            inputCodigoSeguridad.reportValidity();
+        } else if (!regexFechaVencimiento.test(inputFechaVencimiento.value)) {
+            inputFechaVencimiento.setCustomValidity("Ingrese dos números para el mes y dos para el año separados por /");
+            inputFechaVencimiento.reportValidity();
+        }
+        else if (!regexTelefono.test(inputTelefono.value)){
+            inputTelefono.setCustomValidity("Ingrese un numero de telefono valido, sin guiones ni espacios");
+            inputTelefono.reportValidity();
         } else {
             compraRealizada();
         }
-        
-    });
+    }
 
     divTipoTarjetas.append(inputTarjetaDebito, labelTarjetaDebito, inputTarjetaCredito, labelTarjetaCredito);
-    divInfoTarjetas.append(spanNombre, inputNombre, spanNumeroTarjeta, inputNumeroTarjeta, spanCodigoSeguridad, inputCodigoSeguridad);
+    divInfoTarjetas.append(spanNombre, inputNombre, spanNumeroTarjeta, inputNumeroTarjeta, spanFechaVencimiento, inputFechaVencimiento, spanCodigoSeguridad, inputCodigoSeguridad);
     divCuotas.append(spanCuotas, selectCuotas, precioCuotas, spanPrecioFinalCuotas);  
     fieldsetMetodoPago.append(legendMetodoPago, divTipoTarjetas, divInfoTarjetas, divCuotas);
 

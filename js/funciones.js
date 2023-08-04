@@ -35,15 +35,6 @@ window.addEventListener("keydown", (e) => {
 });
 
 
+
 //REVISAR PORQUE NO VA HACIA EL ADDEVENTLISTENER DEL SUBMIT
 
-// window.addEventListener("keydown", (e) => {
-//   if(e.key == 'Enter')
-//   {
-//     let formCompra = document.querySelector("#formularioCompra");
-//     if(formCompra){
-//       formCompra.submit();
-//     }
-    
-//   }
-// })
