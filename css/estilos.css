@@ -540,13 +540,13 @@ header #minicarrito .filtros .btn-eliminar:hover {
 	bottom: 0;
 	right: 0;
 }
-.productosCarrito {
+.productosCarrito, .resumen {
     width: 80%;
     margin: 1% 10%;
     height: auto;
 	text-align: center;
 }
-.productosCarrito div {
+.productosCarrito div, .resumen div {
     margin: 1% 1%;
     height: auto;
 	display: flex;
@@ -573,7 +573,7 @@ header #minicarrito .filtros .btn-eliminar:hover {
 	bottom: 0;
 	right: 0;
 }
-.productosCarrito div p {
+.productosCarrito div p, .resumen div p {
     width: 35%;
     margin: 0 0 0 0;
 	text-align: center;
@@ -683,13 +683,13 @@ header #minicarrito .filtros .btn-eliminar:hover {
     }
 }
 @media screen and (max-width: 568px) {
-    .productosCarrito div {
+    .productosCarrito div, .resumen div {
         flex-direction: row;
         flex-wrap: wrap;
         line-height: 1.5em;
         margin-top: 5%;
     }
-    .productosCarrito div p {
+    .productosCarrito div p, .resumen div p {
         width: 90%;
         margin: 0% 5% 3% 5%;
     }

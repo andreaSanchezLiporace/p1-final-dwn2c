@@ -33,8 +33,3 @@ window.addEventListener("keydown", (e) => {
       }
     }
 });
-
-
-
-//REVISAR PORQUE NO VA HACIA EL ADDEVENTLISTENER DEL SUBMIT
-

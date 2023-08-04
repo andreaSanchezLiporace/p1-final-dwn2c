@@ -101,7 +101,7 @@ pItemsAgregados.append(spanItemsAgregados);
 let localStorageTotalPagar;
 
 let pTotalPagar = document.createElement("p");
-pTotalPagar.innerText = "es el total ";
+pTotalPagar.innerText = "A pagar ";
 let spanTotalPagar = document.createElement("span");
 spanTotalPagar.setAttribute("id","totalPagar");
 
@@ -499,6 +499,14 @@ function realizarCompra() {
         inputDireccion.setAttribute("placeholder", "Ingrese la direccion de entrega");
         inputDireccion.setAttribute("required", "true");
 
+    let spanEmail = document.createElement("span");
+        spanEmail.innerText = "E-mail";
+
+    let inputEmail = document.createElement("input");
+        inputEmail.setAttribute("type", "email");
+        inputEmail.setAttribute("placeholder", "ejemplo@dominio.com");
+        inputEmail.setAttribute("required", "true");
+
     let spanTelefono = document.createElement("span");
         spanTelefono.innerText = "Telefono";
     
@@ -522,7 +530,7 @@ function realizarCompra() {
         // Establecer el atributo "min" para limitar el año de partida
         inputFecha.setAttribute('min', `${añoActual}-${mesActual.toString().padStart(2, '0')}-${fechaActual.toString().padStart(2, '0')}`);
 
-    fieldsetCliente.append(legendCliente, spanNombreCompleto, inputNombreCompleto, spanDireccion, inputDireccion, spanTelefono, inputTelefono, spanFecha, inputFecha);
+    fieldsetCliente.append(legendCliente, spanNombreCompleto, inputNombreCompleto, spanDireccion, inputDireccion, spanEmail, inputEmail, spanTelefono, inputTelefono, spanFecha, inputFecha);
 
     let fieldsetMetodoPago = document.createElement("fieldset");
     let legendMetodoPago = document.createElement("legend");
@@ -641,11 +649,11 @@ function realizarCompra() {
 
     inputNombreCompleto.addEventListener("input", (e) => {
             e.target.setCustomValidity("");
-          });
+        });
 
     inputNombre.addEventListener("input", (e) => {
             e.target.setCustomValidity("");
-          });
+        });
 
     inputNumeroTarjeta.addEventListener("input", (e) => {
         e.target.setCustomValidity("");
@@ -659,6 +667,10 @@ function realizarCompra() {
         e.target.setCustomValidity("");
         }); 
 
+    inputEmail.addEventListener("input", (e) => {
+        e.target.setCustomValidity("");
+        });
+
     inputTelefono.addEventListener("input", (e) => {
         e.target.setCustomValidity("");
         });
@@ -671,7 +683,6 @@ function realizarCompra() {
     });
 
     window.addEventListener("keydown", (e) => {
-  
         if(e.key == 'Enter')
         {
          let formCompra = document.querySelector("#formularioCompra");
@@ -682,9 +693,9 @@ function realizarCompra() {
      })
 
     function validarForm() {
-        const regexNombreCompleto = new RegExp('^[A-Z]+$', 'i');
+        const regexNombreCompleto = new RegExp('^[A-Za-z ]+$', 'i');
 
-        const regexNombreTarjeta = new RegExp('^[A-Z]+$');
+        const regexNombreTarjeta = new RegExp('^[A-Z ]+$');
 
         const regexNumeroTarjeta = new RegExp('^\\d{16}$');
 
@@ -693,6 +704,8 @@ function realizarCompra() {
         const regexCodigoSeguridadMax = new RegExp('^\\d{4}$');
 
         const regexFechaVencimiento = new RegExp ('^(0[1-9]|1[012])\\/\\d{2}$');
+
+        const regexEmail = new RegExp ('\\b[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}\\b');
 
         const regexTelefono = new RegExp('^\\d{7,20}$');
 
@@ -728,6 +741,9 @@ function realizarCompra() {
         else if (!regexTelefono.test(inputTelefono.value)){
             inputTelefono.setCustomValidity("Ingrese un numero de telefono valido, sin guiones ni espacios");
             inputTelefono.reportValidity();
+        } else if (!regexEmail.test(inputEmail.value)){
+            inputEmail.setCustomValidity("Ingrese una dirección de correo electrónico");
+            inputEmail.reportValidity();
         } else {
             compraRealizada();
         }
@@ -815,13 +831,13 @@ function compraRealizada(){
                 divProductosCarrito.append(producto.productoResumenCompra());
         }
 
+    let divResumen = document.createElement("div");
+        divResumen.classList.add("resumen");
+    let divResumenDiv = document.createElement("div");
+        divResumenDiv.classList.add("resumenDiv");
     let pCantProductos = document.createElement("p");
         pCantProductos.setAttribute('id','pCantProductosModal');
         pCantProductos.innerText = "Cantidad de productos: " + parseInt(contadorProductos);
-
-    // let pPrecioTotal = document.createElement("p");
-    //     pPrecioTotal.setAttribute('id','pPrecioTotalModal');
-    //     pPrecioTotal.innerText = "Total a pagar: " + mostrarPrecioEnPesos(parseFloat(precioTotal));
 
     let pCantCuotas = document.createElement("p");
     pCantCuotas.innerText = `Total cuotas: ${cuotas}`;
@@ -855,8 +871,9 @@ function compraRealizada(){
 
             cerrar.remove();
         });
-
-    modalCompraRealizada.append(h3CompraRealizada, pCompraRealizada1, pCompraRealizada2, divProductosCarrito, pCantCuotas, pPrecioEnCuotas, pCantProductos, pCompraRealizada3, buttonVolver);
+    divResumenDiv.append(pCantCuotas, pPrecioEnCuotas, pCantProductos);
+    divResumen.append(divResumenDiv);
+    modalCompraRealizada.append(h3CompraRealizada, pCompraRealizada1, pCompraRealizada2, divProductosCarrito, divResumen, pCompraRealizada3, buttonVolver);
     // Traemos el div que esta al mismo nivel de la seccion de productos
     // No termino de darme cuenta como crear un hijo de la modal carrito
     let sectionProductos = document.querySelector("#contenedorProductos");
@@ -865,8 +882,8 @@ function compraRealizada(){
 }
 
 /**
-     * Mostrar todas las publicidadades juntas en una modal.
-    */
+    * Mostrar todas las publicidadades juntas en una modal.
+*/
 function verPublicidades() {
     let modalDetalle = document.querySelector("#modalProducto");
     let modalCarrito = document.querySelector("#modalCarrito");
