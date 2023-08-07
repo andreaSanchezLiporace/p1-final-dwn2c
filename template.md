@@ -2,8 +2,8 @@
 
 ## Alumno/s
 
-- Archilli, Matías (Repo: https://github.com/mArchilli/p1-parcial-2-dwn2c // Sitio publicado: https://marchilli.github.io/p1-parcial-2-dwn2c/)
-- Sanchez Liporace, Andrea (Repo: https://github.com/andreaSanchezLiporace/p1-parcial-2-dwn2c // Sitio publicado: https://andreaSanchezLiporace.github.io/p1-parcial-2-dwn2c/)
+- Archilli, Matías (Repo: https://github.com/mArchilli/p1-parcial-2-dwn2c // Sitio publicado: https://marchilli.github.io/p1-final-dwn2c/)
+- Sanchez Liporace, Andrea (Repo: https://github.com/andreaSanchezLiporace/p1-parcial-2-dwn2c // Sitio publicado: https://andreaSanchezLiporace.github.io/p1-final-dwn2c/)
 
 ## Observaciones
 
